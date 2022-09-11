@@ -1,32 +1,50 @@
-// document.body.style.width = '100%';
-// document.body.style.display = 'flex';
-// document.body.style.flexDirection = 'column';
-// document.body.style.justifyContent = 'center';
-// document.body.style.alignItems = 'center';
-// document.body.
 
 
+
+document.body.style.display = 'flex';
+document.body.style.flexDirection = 'column';
+document.body.style.justifyContent = 'space-between';
+document.body.style.alignItems = 'center';
+
+
+
+let length = prompt('Enter length amount')
+if (length > 100) {
+    length = 100;
+}
 
 
 let grid = document.createElement('div');
 
 
 grid.style.cssText = ' \
-width: 95%; border: 2px solid red;\
-height: 50%;\
+width: 800px; border: 5px solid red;\
+height: 800px;\
 display: flex;\
-flex-wrap: wrap;\
-border-collapse: collapse;'
-;
+flex-wrap: wrap';
 
-// let gridheight = grid.offsetWidth.toString();
-// gridheight = gridheight + 'px';
-// grid.style.height = gridheight;
 
-let length = prompt("How many squares across?");
-if(length > 100){
-    length = 100;
-}
+var colorArray = [
+    "#FF6633",
+    "#FFB399",
+    "#FF33FF",
+    "#FFFF99",
+    "#00B3E6",
+    "#E6B333",
+    "#3366E6",
+    "#999966",
+    "#809980",
+    "#E6FF80",
+    "#1AFF33",
+    "#999933",
+    "#FF3380",
+    "#CCCC00",
+    "#66E64D",
+    "#4D80CC",
+    "#FF4D4D",
+    "#99E6E6",
+    "#6666FF"
+];
 
 let squares = [];
 
@@ -45,9 +63,7 @@ for(let i = 0; i < n*n; i++){
    elem.style.alignItems = 'center';
 
 
-   if(i < n){
-    elem.style.backgroundColor = 'blue';
-   }
+   
    let isDown = false;
  
 
@@ -63,12 +79,12 @@ for(let i = 0; i < n*n; i++){
 
    elem.addEventListener('mousedown', function(){
     isDown = true;
-    elem.style.backgroundColor = 'blue';
+    elem.style.backgroundColor = colorArray[Math.floor(Math.random()*colorArray.length)];
    })
 
    elem.addEventListener('mouseover', function(){
     if(isDown == true){
-        elem.style.backgroundColor = 'blue';
+        elem.style.backgroundColor = colorArray[Math.floor(Math.random()*colorArray.length)];
     }
    
    })
@@ -83,19 +99,20 @@ document.body.appendChild(grid);
 
 const squarearray = Array.from(squares);
 
-// const reset = document.createElement('button');
-// reset.textContent = "RESET";
-// reset.style.fontSize = '30px';
-// reset.style.width = 'fitcontent';
+const reset = document.createElement('button');
+reset.textContent = "RESET";
+reset.style.fontSize = '30px';
+reset.style.width = 'fitcontent';
 
-// document.body.appendChild(reset);
+document.body.appendChild(reset);
 
 
-// reset.addEventListener('click', function(){
-//     for(let i = 0; i < squarearray.length; i++){
-//         squarearray[i].style.backgroundColor = 'white';
+reset.addEventListener('click', function(){
+    for(let i = 0; i < squarearray.length; i++){
+        squarearray[i].style.backgroundColor = 'white';
         
-//     }
-// });
+    }
+});
+
 
 
