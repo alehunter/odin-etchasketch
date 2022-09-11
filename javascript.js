@@ -1,118 +1,178 @@
 
 
+function formatDocument(){
+    let docvar = document.body.style;
 
-document.body.style.display = 'flex';
-document.body.style.flexDirection = 'column';
-document.body.style.justifyContent = 'space-between';
-document.body.style.alignItems = 'center';
-
-
-
-let length = prompt('Enter length amount')
-if (length > 100) {
-    length = 100;
+    docvar.display = 'flex';
+    docvar.flexDirection = 'row';
+    docvar.justifyContent = 'center';
+    docvar.alignItems = 'center';
+    document.body
+    docvar.width = '95%';
+    docvar.height = '95%';
 }
 
 
-let grid = document.createElement('div');
+// function createInputLabel(){
+//     const input = document.createElement('input');
+// }
 
-
-grid.style.cssText = ' \
-width: 800px; border: 5px solid red;\
-height: 800px;\
-display: flex;\
-flex-wrap: wrap';
-
-
-var colorArray = [
-    "#FF6633",
-    "#FFB399",
-    "#FF33FF",
-    "#FFFF99",
-    "#00B3E6",
-    "#E6B333",
-    "#3366E6",
-    "#999966",
-    "#809980",
-    "#E6FF80",
-    "#1AFF33",
-    "#999933",
-    "#FF3380",
-    "#CCCC00",
-    "#66E64D",
-    "#4D80CC",
-    "#FF4D4D",
-    "#99E6E6",
-    "#6666FF"
-];
-
-let squares = [];
-
-let n = length;
-let calc = (100/n)*.894;
-let base = calc.toString();
-let str = base + '%';
-
-for(let i = 0; i < n*n; i++){
-   let elem = document.createElement('div');
-   elem.classList.add('square');
-   elem.style.width = str;
-   elem.style.height = str;
-   elem.style.display = 'flex';
-   elem.style.justifyContent = 'center';
-   elem.style.alignItems = 'center';
-
-
+function createClearButton(elementsToClear){
+   //takes an argument "elementsToClear". An array of elements to set backgroundColors to white
    
-   let isDown = false;
- 
+    //creating button
+    let button = document.createElement('button');
+    button.textContent = 'CLEAR';
 
-   document.body.addEventListener('mousedown', function(){
-    isDown = true;
+    //using a shorthand variable to use css
+    let buttonvar = button.style;
+    buttonvar.padding = '10px';
+    buttonvar.fontSize = '20px';
+    buttonvar.fontFamily = 'sans-serif'
+
+    //creating button clearing functionality
+    button.addEventListener('click', function(){
+        elementsToClear.forEach(element => {
+            element.style.backgroundColor = 'white';
+        });
+    })
+
+    return button
+}
+
+function createControls(grid){
+
+    //creating and editing CONTROLS div
+    const controls = document.createElement('div');
+    controls.style.cssText = "display: flex; flex-direction: column; justify-content: space-between; align-items: center;\
+    margin-left: 20px; height: 700px; width: fit-content;";
+
+    //creating and editing CONTROLS elements
+    const elementsToChange = grid.squares;
+    const button = createClearButton(elementsToChange);
+    // const input = createInputLabel(elementsToChange);
+
+    //adding CONTROLS elements to div
+    // controls.appendChild(input);
+    controls.appendChild(button);
+
+
+    return controls;
+}
+
+
+function createSquare(squarelengthstring){
+    //createSquares takes a string "squarelengthstring" as an argument that represents the length n,
+    // by which the nxn square will be constructed
+    const COLORARRAY = [
+        "#FF6633",
+        "#FFB399",
+        "#FF33FF",
+        "#FFFF99",
+        "#00B3E6",
+        "#E6B333",
+        "#3366E6",
+        "#999966",
+        "#809980",
+        "#E6FF80",
+        "#1AFF33",
+        "#999933",
+        "#FF3380",
+        "#CCCC00",
+        "#66E64D",
+        "#4D80CC",
+        "#FF4D4D",
+        "#99E6E6",
+        "#6666FF"
+    ];
+    //creating square, defining basic dimensions
+    let square = document.createElement('div');
+    square.style.width = squarelengthstring;
+    square.style.height = squarelengthstring;
+
+    //flag isDown is used to be able to detect down and drag movements to paint squares
+    let isDown = false;
+
+    document.body.addEventListener('mousedown', function () {
+        isDown = true;
+    });
+
+    document.body.addEventListener('mouseup', function () {
+        isDown = false;
+    });
+
+    square.addEventListener('mousedown', function () {
+        isDown = true;
+        square.style.backgroundColor = COLORARRAY[Math.floor(Math.random() * COLORARRAY.length)];
+    });
+
+    square.addEventListener('mouseover', function () {
+        if (isDown == true) {
+            square.style.backgroundColor = COLORARRAY[Math.floor(Math.random() * COLORARRAY.length)];
+        }
+    });
+
+    return square;
+}
+
+function createGrid(gridlength, numsquares){
     
-   })
+    //define basic grid details
+    let grid = document.createElement('div');
+    let gridlengthstring = gridlength.toString();
+    gridlengthstring += "px";
+    grid.style.height = gridlengthstring;
+    grid.style.width = gridlengthstring;
+    grid.style.border = '3px solid red';
+    grid.style.display = 'flex';
+    grid.style.flexWrap = 'wrap';
+    
+    //calculate square dimensions
+    const squarelength = gridlength/numsquares;
+    let squarelengthstring = squarelength.toString();
+    squarelengthstring += "px";
 
-   document.body.addEventListener('mouseup', function(){
-    isDown = false;
-   })
+    //create squares
+    //squares array is used so squares can be accessed by outside functionality.
+    let squares = [];
+    for(let i = 0; i < numsquares*numsquares; i++){
+        square = createSquare(squarelengthstring)
+        squares.push(square);
+        grid.appendChild(square);
 
-
-   elem.addEventListener('mousedown', function(){
-    isDown = true;
-    elem.style.backgroundColor = colorArray[Math.floor(Math.random()*colorArray.length)];
-   })
-
-   elem.addEventListener('mouseover', function(){
-    if(isDown == true){
-        elem.style.backgroundColor = colorArray[Math.floor(Math.random()*colorArray.length)];
     }
-   
-   })
-   
 
-   squares.push(elem);
-   
-   grid.appendChild(elem);
+
+    const gridobj = {
+        grid: grid,
+        squares: squares
+    }
+
+    return gridobj;
+
 }
-document.body.appendChild(grid);
 
+function main(){
 
-const squarearray = Array.from(squares);
+    //LENGTH AND SQUARE AMOUNT CONSTANTS
+    const GRIDLENGTH = 800;
+    const NUMSQUARES = 20;
 
-const reset = document.createElement('button');
-reset.textContent = "RESET";
-reset.style.fontSize = '30px';
-reset.style.width = 'fitcontent';
+    //formatting document.body
+    formatDocument();
 
-document.body.appendChild(reset);
+    //creating GRID
+    const grid = createGrid(GRIDLENGTH, NUMSQUARES);
+    
 
+    //creating controls
+    const controls = createControls(grid);
 
-reset.addEventListener('click', function(){
-    for(let i = 0; i < squarearray.length; i++){
-        squarearray[i].style.backgroundColor = 'white';
-        
-    }
-});
+    //adding elements to document body
+    document.body.appendChild(grid.grid);
+    document.body.appendChild(controls)
+    
 
+}
 
-
+main();
