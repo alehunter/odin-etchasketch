@@ -85,6 +85,8 @@ function createSquare(squarelengthstring){
         "#99E6E6",
         "#6666FF"
     ];
+
+    const thecolor = 'rgb(231,120,23)'
     //creating square, defining basic dimensions
     let square = document.createElement('div');
     square.style.width = squarelengthstring;
@@ -103,12 +105,14 @@ function createSquare(squarelengthstring){
 
     square.addEventListener('mousedown', function () {
         isDown = true;
-        square.style.backgroundColor = COLORARRAY[Math.floor(Math.random() * COLORARRAY.length)];
+        square.style.backgroundColor = thecolor;
+        // square.style.backgroundColor = COLORARRAY[Math.floor(Math.random() * COLORARRAY.length)];
     });
 
     square.addEventListener('mouseover', function () {
         if (isDown == true) {
-            square.style.backgroundColor = COLORARRAY[Math.floor(Math.random() * COLORARRAY.length)];
+            square.style.backgroundColor = thecolor;
+            // square.style.backgroundColor = COLORARRAY[Math.floor(Math.random() * COLORARRAY.length)];
         }
     });
 
@@ -156,7 +160,7 @@ function main(){
 
     //LENGTH AND SQUARE AMOUNT CONSTANTS
     const GRIDLENGTH = 800;
-    const NUMSQUARES = 20;
+    const NUMSQUARES = 100;
 
     //formatting document.body
     formatDocument();
@@ -176,3 +180,5 @@ function main(){
 }
 
 main();
+
+
